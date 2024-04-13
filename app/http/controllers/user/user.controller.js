@@ -248,7 +248,7 @@ class userAuthController extends Controller {
       secure: true,
       path: "/",
       domain:
-        process.env.NODE_ENV === "development" ? "localhost" : ".fronthooks.ir",
+        process.env.NODE_ENV === "development" ? "localhost" : "sara-tattoo.ir",
     };
     res.cookie("accessToken", null, cookieOptions);
     res.cookie("refreshToken", null, cookieOptions);
