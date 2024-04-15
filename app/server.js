@@ -11,7 +11,7 @@ dotenv.config();
 class Application {
   #app = express();
   #PORT = process.env.PORT || 5000;
-  #DB_URI = process.env.APP_DB;
+  #DB_URI = process.env.DATABASE_URL;
 
   constructor() {
     this.createServer();
@@ -29,8 +29,9 @@ class Application {
   connectToDB() {
     mongoose
       .connect(this.#DB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true,
+        authSource: "admin",
       })
       .then((res) => console.log("MongoDB connected!!"))
       .catch((err) => console.log("Failed to connect to MongoDB", err));
