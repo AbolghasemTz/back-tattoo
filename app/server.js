@@ -7,11 +7,12 @@ const mongoose = require("mongoose");
 const createError = require("http-errors");
 const path = require("path");
 const { allRoutes } = require("./router/router");
+
 dotenv.config();
 class Application {
   #app = express();
   #PORT = process.env.PORT || 5000;
-  #DB_URI = process.env.DATABASE_URL;
+  #DB_URI = process.env.APP_DB;
 
   constructor() {
     this.createServer();
@@ -29,9 +30,9 @@ class Application {
   connectToDB() {
     mongoose
       .connect(this.#DB_URI, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
-        authSource: "admin",
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        // authSource: "admin",
       })
       .then((res) => console.log("MongoDB connected!!"))
       .catch((err) => console.log("Failed to connect to MongoDB", err));
@@ -40,6 +41,7 @@ class Application {
     this.#app.use(
       cors({ credentials: true, origin: process.env.ALLOW_CORS_ORIGIN })
     );
+   
     this.#app.use(express.json());
     this.#app.use(express.urlencoded({ extended: true }));
     this.#app.use(express.static(path.join(__dirname, "..")));
